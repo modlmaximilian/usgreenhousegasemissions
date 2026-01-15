@@ -431,15 +431,29 @@ let currentPollutant;
 
 Promise.all([
   d3.json("https://unpkg.com/us-atlas@3/states-10m.json"),
-  d3.csv("./combined_nei_grouped_2010_2023_final.csv", d => ({
-    year: +d.Year,
-    state: stateAbbrToName.get(d.State),
-    CO2: +d["CO2 emissions (non-biogenic) "],
-    CH4: +d["Methane (CH4) emissions "],
-    N2O: +d["Nitrous Oxide (N2O) emissions "],
-    TOTAL: +d["Total reported direct emissions"]
-  }))
-]).then(([statesTopo, rows]) => {
+  d3.csv("./combined_nei_grouped_2010_2023_final.csv", d => {
+    const clean = {};
+    for (const k in d) clean[k.trim()] = d[k];
+
+    // ⛔ FILTER OUT US TOTAL ROWS
+    if (clean.State === "ALL") return null;
+
+    const stateName = stateAbbrToName.get(clean.State);
+    if (!stateName) return null;
+
+    return {
+      year: +clean.Year,
+      state: stateName,
+      CO2: +clean["CO2 emissions (non-biogenic)"],
+      CH4: +clean["Methane (CH4) emissions"],
+      N2O: +clean["Nitrous Oxide (N2O) emissions"],
+      TOTAL: +clean["Total reported direct emissions"]
+    };
+  })
+]).then(([statesTopo, rawRows]) => {
+
+  // Remove null rows caused by filtering
+  const rows = rawRows.filter(d => d !== null);
 
   stateFeatures = topojson.feature(
     statesTopo,
@@ -456,6 +470,7 @@ Promise.all([
   yearText.value = currentYear;
   currentPollutant = pollutantSelect.value;
 
+  // ✅ STATE × YEAR aggregation ONLY
   dataAgg = d3.rollup(
     rows,
     v => ({
@@ -495,7 +510,9 @@ function renderMap() {
   const values = Array.from(valuesByState.values());
   if (!values.length) return;
 
-  color_map.domain(d3.extent(values));
+  // ✅ TRUE YEAR-SPECIFIC SCALE
+  const maxValue = d3.max(values);
+  color_map.domain([0, maxValue]);
 
   mapGroup.selectAll("path")
     .data(stateFeatures, d => d.properties.name)
@@ -508,23 +525,22 @@ function renderMap() {
     .attr("stroke", "#999")
     .attr("stroke-width", 0.5)
     .on("mouseover", (event, d) => {
-  const v = valuesByState.get(d.properties.name);
+      const v = valuesByState.get(d.properties.name);
 
-  mapTooltip
-    .style("opacity", 1)
-    .html(`
-      <strong>${d.properties.name}</strong><br>
-      ${currentPollutant}: ${v != null ? d3.format(",")(v) : "No data"}<br>
-      Year: ${currentYear}
-    `);
-})
-.on("mousemove", event => {
-  mapTooltip
-    .style("left", (event.pageX + 12) + "px")
-    .style("top", (event.pageY + 12) + "px");
-})
-.on("mouseout", () => {
-  mapTooltip.style("opacity", 0);
-});
+      mapTooltip
+        .style("opacity", 1)
+        .html(`
+          <strong>${d.properties.name}</strong><br>
+          ${currentPollutant}: ${v != null ? d3.format(",")(v) : "No data"}<br>
+          Year: ${currentYear}
+        `);
+    })
+    .on("mousemove", event => {
+      mapTooltip
+        .style("left", (event.pageX + 12) + "px")
+        .style("top", (event.pageY + 12) + "px");
+    })
+    .on("mouseout", () => {
+      mapTooltip.style("opacity", 0);
+    });
 }
- 

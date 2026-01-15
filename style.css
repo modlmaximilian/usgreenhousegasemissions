@@ -4,8 +4,7 @@
   gap: 24px;
 
   width: 100%;
-  max-width: none;
-  margin: 0 auto 40px;
+  margin-bottom: 40px;
   padding: 0 16px;
 
   box-sizing: border-box; 
@@ -82,12 +81,6 @@
   align-items: center;
 }
 
-#chart,
-#barplot {
-  width: 100%;
-  height: 100%;
-  display: block;
-}
 
 #choropleth-container {
   width: 100%;
@@ -96,29 +89,20 @@
   box-sizing: border-box;
 }
 .charts-wrapper {
-  flex: 1;                       
   display: flex;
   flex-direction: column;
   justify-content: center;       
   gap: 32px;
 }
+
 #chart,
 #barplot,
 #choropleth-container svg {
   width: 100%;
   height: 100%;
   display: block;
-  overflow: hidden;
 }
 
-#barplot-container {
-  width: 100%;
-  height: 420px;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 
 .tooltip,
 #map-tooltip {
