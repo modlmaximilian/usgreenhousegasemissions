@@ -200,7 +200,7 @@ function setupBarplot() {
   svg.append("g")
     .attr("class", "barplot-g");
 
-  const margin = { top: 40, right: 40, bottom: 50, left: 220 };
+  const margin = { top: 40, right: 40, bottom: 50, left: 350 };
   const innerWidth = width - margin.left - margin.right;
 
   svg.select(".barplot-g")
@@ -224,7 +224,7 @@ function updateBarplot(year, state, city, data) {
     .attr("width", width)
     .attr("height", height);
 
-  const margin = { top: 40, right: 40, bottom: 50, left: 220 };
+  const margin = { top: 40, right: 40, bottom: 50, left: 350 };
   const innerWidth = width - margin.left - margin.right;
   const innerHeight = height - margin.top - margin.bottom;
 
