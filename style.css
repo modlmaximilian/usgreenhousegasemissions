@@ -1,0 +1,142 @@
+#dashboard {    
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+
+  width: 100%;
+  max-width: none;
+  margin: 0 auto 40px;
+  padding: 0 16px;
+
+  box-sizing: border-box; 
+}
+
+.panel {
+  background: #fafafa;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 20px;
+
+  display: flex;
+  flex-direction: column;
+
+  box-sizing: border-box; 
+}
+
+.panel-title {
+  text-align: center;
+  font-size: 22px;
+  line-height: 1.3;
+  margin-bottom: 18px;
+}
+
+.panel-controls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 24px;
+  margin-bottom: 20px;
+}
+
+.panel-controls label {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.panel-controls select,
+.panel-controls input[type="text"],
+.panel-controls input[type="range"] {
+  font-size: 14px;
+  padding: 6px 10px;
+}
+
+#pollutant-controls label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  font-size: 14px;
+}
+
+#pollutant-controls input[type="checkbox"] {
+  transform: scale(1.15);  
+}
+
+#chart-container {
+  width: 100%;
+  height: 360px;
+  margin-bottom: 24px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+#barplot-container {
+  width: 100%;
+  height: 420px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#chart,
+#barplot {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+#choropleth-container {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  padding: 12px;          
+  box-sizing: border-box;
+}
+.charts-wrapper {
+  flex: 1;                       
+  display: flex;
+  flex-direction: column;
+  justify-content: center;       
+  gap: 32px;
+}
+#chart,
+#barplot,
+#choropleth-container svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  overflow: hidden;
+}
+
+#barplot-container {
+  width: 100%;
+  height: 420px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.tooltip,
+#map-tooltip {
+  position: fixed;                
+  z-index: 1000;
+  pointer-events: none;
+
+  background: rgba(0, 0, 0, 0.85);  
+  color: #ffffff;
+
+  padding: 8px 12px;
+  border-radius: 6px;
+
+  font-size: 13px;
+  line-height: 1.4;
+
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}

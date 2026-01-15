@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>US Greenhouse Gas Emissions Over Time</title>
+
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="https://unpkg.com/topojson-client@3"></script>
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+
+<section id="dashboard">
+
+  <!-- LEFT PANEL -->
+  <div class="panel left-panel">
+
+    <h2 class="panel-title">
+      How do greenhouse gas emissions change over time across US cities?<br>
+      Which sectors contribute more?
+    </h2>
+
+    <div class="panel-controls">
+      <div>
+        <label>Select State</label>
+        <select id="state-select"></select>
+      </div>
+
+      <div>
+        <label>Select City</label>
+        <select id="city-select"></select>
+      </div>
+
+      <div>
+        <label>Select Emission Types</label>
+        <div id="pollutant-controls">
+          <label><input type="checkbox" value="CO2" checked> CO₂</label>
+          <label><input type="checkbox" value="CH4" checked> CH₄</label>
+          <label><input type="checkbox" value="N2O" checked> N₂O</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="charts-wrapper">
+  <div id="chart-container">
+    <svg id="chart"></svg>
+  </div>
+
+  <div id="barplot-container">
+    <svg id="barplot"></svg>
+  </div>
+</div>
+
+
+  </div>
+
+  <!-- RIGHT PANEL -->
+  <div class="panel right-panel">
+
+    <h2 class="panel-title">
+      How do greenhouse gas emissions change in US states over time?
+    </h2>
+
+    <div class="panel-controls">
+      <label>Year</label>
+      <input id="yearSlider" type="range" />
+      <input id="yearText" type="text" readonly />
+
+      <label>Pollutant</label>
+      <select id="pollutantSelect">
+        <option value="CO2">CO₂</option>
+        <option value="CH4">CH₄</option>
+        <option value="N2O">N₂O</option>
+        <option value="TOTAL">Total</option>
+      </select>
+    </div>
+
+    <div id="choropleth-container"></div>
+
+  </div>
+
+</section>
+
+<div class="tooltip"></div>
+<div id="map-tooltip"></div>
+
+
+
+  <script src="script.js"></script>
+</body>
+</html>
