@@ -435,7 +435,6 @@ Promise.all([
     const clean = {};
     for (const k in d) clean[k.trim()] = d[k];
 
-    // ⛔ FILTER OUT US TOTAL ROWS
     if (clean.State === "ALL") return null;
 
     const stateName = stateAbbrToName.get(clean.State);
@@ -452,7 +451,6 @@ Promise.all([
   })
 ]).then(([statesTopo, rawRows]) => {
 
-  // Remove null rows caused by filtering
   const rows = rawRows.filter(d => d !== null);
 
   stateFeatures = topojson.feature(
@@ -470,7 +468,6 @@ Promise.all([
   yearText.value = currentYear;
   currentPollutant = pollutantSelect.value;
 
-  // ✅ STATE × YEAR aggregation ONLY
   dataAgg = d3.rollup(
     rows,
     v => ({
@@ -510,7 +507,6 @@ function renderMap() {
   const values = Array.from(valuesByState.values());
   if (!values.length) return;
 
-  // ✅ TRUE YEAR-SPECIFIC SCALE
   const maxValue = d3.max(values);
   color_map.domain([0, maxValue]);
 
