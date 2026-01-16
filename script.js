@@ -23,9 +23,10 @@ d3.csv("./combined_nei_grouped_2010_2023_final.csv").then(raw => {
     d.Industry = d["Industry Type (sectors)"] || "Other";
   });
 
-  setupSelectors(raw);
+  
   setupBarplot(); 
   drawLineChart();
+  setupSelectors(raw);
 });
 
 
