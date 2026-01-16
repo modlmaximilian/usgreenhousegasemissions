@@ -47,10 +47,9 @@ function setupSelectors(data) {
       .data(states)
       .enter()
       .append("option")
-      .attr("value", d => d) // Internal value remains "ALL"
-      .text(d => d === "ALL" ? "All States" : d); // Displayed as "All States"
+      .attr("value", d => d) 
+      .text(d => d === "ALL" ? "All States" : d); 
   
-    // Set default to "ALL" so it matches your CSV rows
     stateSelect.property("value", "ALL");
   
     stateSelect.on("change", updateCities);
